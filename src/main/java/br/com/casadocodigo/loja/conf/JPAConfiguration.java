@@ -15,7 +15,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-//@EnableTransactionManagement
+@EnableTransactionManagement
 @Configuration
 public class JPAConfiguration {
 	
@@ -31,12 +31,12 @@ public class JPAConfiguration {
 		return em;
 	}
 	
-//	@Bean
-//	public PlatformTransactionManager platformTransactionManager(EntityManagerFactory emf){
-//		JpaTransactionManager transactionManager = new JpaTransactionManager();
-//		transactionManager.setEntityManagerFactory(emf);
-//		return transactionManager;
-//	}
+	@Bean
+	public PlatformTransactionManager platformTransactionManager(EntityManagerFactory emf){
+		JpaTransactionManager transactionManager = new JpaTransactionManager();
+		transactionManager.setEntityManagerFactory(emf);
+		return transactionManager;
+	}
 	
 	@Bean
 	public DataSource dataSource(){
@@ -50,8 +50,8 @@ public class JPAConfiguration {
 
 	private Properties additionalProperties() {
 		Properties properties = new Properties();
-		properties.setProperty("ḧibernate.hbm2ddl.auto", "update");
-		properties.setProperty("ḧibernate.show_sql", "true");
+		properties.setProperty("hibernate.hbm2ddl.auto", "update");
+		properties.setProperty("hibernate.show_sql", "true");
 		return properties;
 	} 
 	

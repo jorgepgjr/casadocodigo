@@ -12,9 +12,11 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
 	private String title;
 	@Lob
 	private String description;
+	
 	private int numberOfPages;
 
 	public String getTitle() {
