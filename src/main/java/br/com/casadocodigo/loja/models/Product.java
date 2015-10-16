@@ -14,6 +14,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+
 @Entity
 public class Product {
 
@@ -21,7 +22,7 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@NotBlank(message="{titulo.branco}")
+	@NotBlank
 	private String title;
 
 	@Lob

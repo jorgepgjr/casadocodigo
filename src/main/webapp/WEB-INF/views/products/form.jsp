@@ -20,7 +20,7 @@
 		<form:input type="text" path="title" id="title"/>
 		<br/>
 		<label for="description" >Descrição</label>
-		<form:errors path="title"/>
+		<form:errors path="description"/>
 		<form:textarea rows="4" cols="150" path="description" id="description"/>
 		
 		<label for="numberOfPages">Numero de páginas</label>
