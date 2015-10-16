@@ -21,3 +21,18 @@ Unicos methodos que os Browser entendem: GET e POST
  
 - Flash Scope: Dura apenas duas requisições. Usado por exemplo depois de cadastrar algo no BD e dar um redirect para outra action, conseguir pegar um parametro do primeiro request; 
  
+##Validação
+- http://www.devmedia.com.br/bean-validation-1-1-validando-dados-com-anotacoes/30070
+- Usando o @Valid dentro do objeto que recebos no controller;
+ex: <code>	@RequestMapping(method=RequestMethod.POST)
+	public String save(@Valid Product product, BindingResult result, RedirectAttributes ra){
+		//Verificando se tem erros de validacao
+		if (result.hasErrors()) {
+			return "products/form";
+		}
+</code>
+
+
+
+
+  

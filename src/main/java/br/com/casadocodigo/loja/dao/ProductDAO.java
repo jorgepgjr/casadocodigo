@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
@@ -27,4 +28,11 @@ public class ProductDAO {
 	public List<Product> list() {
 		return this.entityManager.createQuery("select distinct(p) from Product p join fetch p.prices").getResultList();
 	}
+	
+	public boolean existTitle(Product product) {
+		final Query query = this.entityManager.createQuery("select p from Product p where p.title = :title");
+				query.setParameter("title", product.getTitle());
+				return !query.getResultList().isEmpty();
+	}
+
 }
