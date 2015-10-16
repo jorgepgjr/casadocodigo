@@ -10,6 +10,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -47,7 +48,7 @@ public class ProductsController {
 	
 	@Transactional
 	@RequestMapping(method=RequestMethod.POST)
-	public ModelAndView save(@Valid Product product, BindingResult result, RedirectAttributes ra){
+	public ModelAndView save(@Valid Product product, BindingResult result, RedirectAttributes ra, MultipartFile summary){
 		
 		//Verificando se tem erros de validacao
 		if (result.hasErrors()) {

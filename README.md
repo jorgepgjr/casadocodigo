@@ -24,7 +24,6 @@ Unicos methodos que os Browser entendem: GET e POST
 ### Validação
 - http://www.devmedia.com.br/bean-validation-1-1-validando-dados-com-anotacoes/30070
 - Usando o @Valid dentro do objeto que recebemos no controller;
-ex:
 ```
 	@RequestMapping(method=RequestMethod.POST)
 	public String save(**@Valid** Product product, BindingResult result, RedirectAttributes ra){
@@ -33,8 +32,19 @@ ex:
 			return "products/form";
 	}
 ```
-- As mensagens de erro podem ficar em um arquivo .properties, configurado no Spring esse properties.
+- As mensagens de erro podem ficar em um arquivo .properties, configurado no Spring11.
 
-
-
-  
+### Upload de arquivo
+- Colocamos na assinatura do metodo do Controler o MultipartFile summary que conterá o file.
+```
+@RequestMapping(method=RequestMethod.POST)
+	public ModelAndView save(@Valid Product product, BindingResult result, RedirectAttributes ra, **MultipartFile summary**){
+	.
+	.
+	.
+```
+ - E no form colocamos o enctype:
+``` 
+ <form:form action="${spring:mvcUrl('PC#save').build()}" method="post"
+		commandName="product" **enctype="multipart/form-data"**>
+```
