@@ -36,15 +36,12 @@ Unicos methodos que os Browser entendem: GET e POST
 
 ### Upload de arquivo
 - Colocamos na assinatura do metodo do Controler o MultipartFile summary que conterá o file.
-```
+```java
 @RequestMapping(method=RequestMethod.POST)
 	public ModelAndView save(@Valid Product product, BindingResult result, RedirectAttributes ra, **MultipartFile summary**){
-	.
-	.
-	.
 ```
  - E no form colocamos o enctype:
-``` 
+```html 
  <form:form action="${spring:mvcUrl('PC#save').build()}" method="post"
 		commandName="product" **enctype="multipart/form-data"**>
 ```
