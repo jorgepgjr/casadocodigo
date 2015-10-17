@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.casadocodigo.loja.dao.ProductDAO;
+import br.com.casadocodigo.loja.infra.FileSaver;
 import br.com.casadocodigo.loja.models.BookType;
 import br.com.casadocodigo.loja.models.Product;
 import br.com.casadocodigo.loja.validator.ProductValidator;
@@ -33,6 +34,9 @@ public class ProductsController {
 	
 	@Autowired
 	private ProductValidator validator;
+	
+	@Autowired
+	private FileSaver fileSaver;
 	
 	@InitBinder
 	public void addValidator(WebDataBinder binder){
@@ -54,6 +58,9 @@ public class ProductsController {
 		if (result.hasErrors()) {
 			return form(product);
 		}
+
+		String filename = fileSaver.write("arquivos", summary);
+		product.setSummaryPath(filename);
 		System.out.println("Cadastrando o produto " + product);
 		productDAO.save(product);
 		ra.addFlashAttribute("sucesso", "Produto Cadastrado com Sucesso");

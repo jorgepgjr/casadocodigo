@@ -26,7 +26,7 @@ Unicos methodos que os Browser entendem: GET e POST
 - Usando o @Valid dentro do objeto que recebemos no controller;
 ```java
 @RequestMapping(method=RequestMethod.POST)
-public String save(**@Valid** Product product, BindingResult result, RedirectAttributes ra){
+public String save(@Valid Product product, BindingResult result, RedirectAttributes ra){
 	//Verificando se tem erros de validacao
 	if (result.hasErrors()) {
 		return "products/form";
@@ -38,10 +38,24 @@ public String save(**@Valid** Product product, BindingResult result, RedirectAtt
 - Colocamos na assinatura do metodo do Controler o MultipartFile summary que conterá o file.
 ```java
 @RequestMapping(method=RequestMethod.POST)
-	public ModelAndView save(@Valid Product product, BindingResult result, RedirectAttributes ra, **MultipartFile summary**){
+	public ModelAndView save(@Valid Product product, BindingResult result, RedirectAttributes ra, MultipartFile summary){
 ```
- - E no form colocamos o enctype:
+ - No form colocamos o enctype:
 ```html 
  <form:form action="${spring:mvcUrl('PC#save').build()}" method="post"
-		commandName="product" **enctype="multipart/form-data"**>
+		commandName="product" enctype="multipart/form-data">
+```
+ - Em configurações, precisamos configurar o MultipartResolver nas configurações do Spring
+```java
+	@Bean
+	public MultipartResolver multipartResolver(){
+		return new StandardServletMultipartResolver();
+	}
+```
+- Precisamos registrar também na nossa configuração 
+```java
+	@Override
+	protected void customizeRegistration(Dynamic registration) {
+		registration.setMultipartConfig(new MultipartConfigElement(""));
+	}
 ```

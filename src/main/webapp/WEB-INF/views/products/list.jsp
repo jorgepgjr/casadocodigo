@@ -29,12 +29,14 @@ table, th, td {
 				</th>
 				<th>Data de Lançamento
 				</th>
+				<th>Caminho do sumário
+				</th>
 				<th>Preço Ebook
 				</th>
 				<th>Preço Printed
 				</th>
 				<th>Preço Combo
-				</th>
+				</th>				
 			</tr>
 			<c:forEach items="${products}" var="product" varStatus="status">
 				<tr>
@@ -42,6 +44,7 @@ table, th, td {
 					<td>${product.title}</td>
 					<td>${product.description}</td>
 					<td>${product.numberOfPages}</td>
+					<td>${product.summaryPath}</td>
 					<td><fmt:formatDate pattern="dd/MM/yyyy"
 							value="${product.releaseDate.time}" /></td>
 					<c:forEach items="${product.prices}" var="price">
