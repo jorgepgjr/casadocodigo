@@ -24,13 +24,13 @@ Unicos methodos que os Browser entendem: GET e POST
 ### Validação
 - http://www.devmedia.com.br/bean-validation-1-1-validando-dados-com-anotacoes/30070
 - Usando o @Valid dentro do objeto que recebemos no controller;
-```
-	@RequestMapping(method=RequestMethod.POST)
-	public String save(**@Valid** Product product, BindingResult result, RedirectAttributes ra){
-		//Verificando se tem erros de validacao
-		if (result.hasErrors()) {
-			return "products/form";
-	}
+```java
+@RequestMapping(method=RequestMethod.POST)
+public String save(**@Valid** Product product, BindingResult result, RedirectAttributes ra){
+	//Verificando se tem erros de validacao
+	if (result.hasErrors()) {
+		return "products/form";
+}
 ```
 - As mensagens de erro podem ficar em um arquivo .properties, configurado no Spring11.
 
