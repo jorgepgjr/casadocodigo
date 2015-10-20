@@ -4,6 +4,8 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -53,6 +55,7 @@ public class ProductsController {
 	
 	@Transactional
 	@RequestMapping(method=RequestMethod.POST)
+	@CacheEvict(value = "lastProducts", allEntries=true)
 	public ModelAndView save(@Valid Product product, BindingResult result, RedirectAttributes ra, MultipartFile summary){
 		
 		//Verificando se tem erros de validacao
@@ -70,6 +73,7 @@ public class ProductsController {
 	
 	@RequestMapping(method=RequestMethod.GET)
 	@Transactional
+	@Cacheable("lastProducts")
 	public ModelAndView list(){		
 		ModelAndView modelAndView = new ModelAndView("products/list");
 		modelAndView.addObject("products", productDAO.list());

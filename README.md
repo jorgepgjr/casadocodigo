@@ -59,3 +59,59 @@ public String save(@Valid Product product, BindingResult result, RedirectAttribu
 		registration.setMultipartConfig(new MultipartConfigElement(""));
 	}
 ```
+
+### Requisições Assíncrinas
+
+- A Servlet do Spring MVC já vem preparada para trabalhar de modo assíncrono, usando Callable.
+```java
+public Callable<String> checkout(){
+		return () -> {
+			BigDecimal total = shoppingCart.getTotal();
+						
+			String uriToPay =
+					"http://book-payment.herokuapp.com/payment";
+			try{
+				String response = restTemplate.postForObject(uriToPay, new PaymentData(total), String.class);
+				System.out.println(response);
+				return "redirect:/products";				
+			} catch (HttpClientErrorException exception){
+				System.out.println("Ocorreu um erro ao criar o Pagamento: " + exception.getMessage());
+				return "redirect:/shopping";
+			}
+		};
+	}
+```
+- Precisamos falar para o Spring que vamos usar o RestTemplate
+```java
+	@Bean
+	public RestTemplate restTemplate(){
+		return new RestTemplate();
+	}
+```
+
+### Cache
+- Alguns gerenciadoes de cache:
+	* guava
+	* ehcache
+	* mencahce
+	* coherence
+
+-Precisamos avisar o Spring que vamos usar cache, colcando a anotação @EnableCaching na nossa classe de configuração (AppWebConfiguration.java). Também precisamos colocar o bean nessa configuração:
+```java
+	@Bean
+	public CacheManager cacheManager(){
+		return new ConcurrentMapCacheManager();			
+	}
+```
+
+- Para cachear o ModelAndView usamos a anotação @Cacheable junto com uma chave para esse cache
+```java
+	@Cacheable("lastProducts")
+	public ModelAndView list(){
+```
+
+- Para invalidar esse cache, usamos o @CacheEvict
+```java
+	@CacheEvict(value = "lastProducts", allEntries=true)
+	public ModelAndView save(@Valid Product product, BindingResult result, RedirectAttributes ra, MultipartFile summary){
+```
