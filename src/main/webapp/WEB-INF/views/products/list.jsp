@@ -19,24 +19,16 @@ table, th, td {
 	<div>
 		<table style="width: 100%">
 			<tr>
-				<th>Id
-				</th>
-				<th>Title
-				</th>
-				<th>Descrição
-				</th>
-				<th>Numer de Páginas
-				</th>
-				<th>Data de Lançamento
-				</th>
-				<th>Caminho do sumário
-				</th>
-				<th>Preço Ebook
-				</th>
-				<th>Preço Printed
-				</th>
-				<th>Preço Combo
-				</th>				
+				<th>Id</th>
+				<th>Title</th>
+				<th>Descrição</th>
+				<th>Numer de Páginas</th>
+				<th>Data de Lançamento</th>
+				<th>Caminho do sumário</th>
+				<th>Preço Ebook</th>
+				<th>Preço Printed</th>
+				<th>Preço Combo</th>
+				<th>Detalhes</th>
 			</tr>
 			<c:forEach items="${products}" var="product" varStatus="status">
 				<tr>
@@ -50,6 +42,8 @@ table, th, td {
 					<c:forEach items="${product.prices}" var="price">
 						<td>${price.value}</td>
 					</c:forEach>
+					<td><c:url value="/products/${product.id}" var="linkDetalhar" />
+						<a href="${linkDetalhar}">Detalhar</a></td>
 				</tr>
 			</c:forEach>
 		</table>

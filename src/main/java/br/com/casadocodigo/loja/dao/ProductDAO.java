@@ -34,5 +34,11 @@ public class ProductDAO {
 				query.setParameter("title", product.getTitle());
 				return !query.getResultList().isEmpty();
 	}
+	
+	public Product find(Integer id) {
+		Query query = this.entityManager.createQuery("select distinct(p) from Product p join fetch p.prices where p.id =:id");
+		query.setParameter("id", id);
+		return (Product) query.getSingleResult();
+	}
 
 }
