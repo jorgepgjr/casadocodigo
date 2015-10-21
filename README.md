@@ -115,3 +115,23 @@ public Callable<String> checkout(){
 	@CacheEvict(value = "lastProducts", allEntries=true)
 	public ModelAndView save(@Valid Product product, BindingResult result, RedirectAttributes ra, MultipartFile summary){
 ```
+### Respondendo em mais de um formato
+
+-Configuramos mais de um ViewResolver para dizer pro Spring que podemos responder em varios formatos. Vamos usar o contentNegotiatingViewResolver configurado em AppWebConfiguration.
+```java
+	@Bean
+	public ViewResolver contentNegotiatingViewResolver(ContentNegotiationManager manager){
+		List<ViewResolver> resolvers = new ArrayList<ViewResolver>();
+		resolvers.add(internalResourceViewResolver()); //Resolver padrão JSP
+		resolvers.add(new JsonViewResolver());   //Resolver para Json
+		resolvers.add(new XmlViewResolver());	 //Resolver para XML
+		
+		ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
+		resolver.setViewResolvers(resolvers);
+		resolver.setContentNegotiationManager(manager);
+		return resolver;
+	}
+```
+
+#### 
+Setup my project

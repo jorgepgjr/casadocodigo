@@ -25,6 +25,7 @@ import br.com.casadocodigo.loja.validator.ProductValidator;
 
 /**
  * Controller of Products;
+ * 
  * @author Jorge Peres
  *
  */
@@ -34,31 +35,32 @@ public class ProductsController {
 
 	@Autowired
 	private ProductDAO productDAO;
-	
+
 	@Autowired
 	private ProductValidator validator;
-	
+
 	@Autowired
 	private FileSaver fileSaver;
-	
+
 	@InitBinder
-	public void addValidator(WebDataBinder binder){
+	public void addValidator(WebDataBinder binder) {
 		binder.addValidators(validator);
 	}
-	
+
 	@RequestMapping("/form")
-	public ModelAndView form(Product product){
+	public ModelAndView form(Product product) {
 		ModelAndView modelAndView = new ModelAndView("products/form");
 		modelAndView.addObject("types", BookType.values());
 		return modelAndView;
 	}
-	
+
 	@Transactional
-	@RequestMapping(method=RequestMethod.POST)
-	@CacheEvict(value = "lastProducts", allEntries=true)
-	public ModelAndView save(@Valid Product product, BindingResult result, RedirectAttributes ra, MultipartFile summary){
-		
-		//Verificando se tem erros de validacao
+	@RequestMapping(method = RequestMethod.POST)
+	@CacheEvict(value = "lastProducts", allEntries = true)
+	public ModelAndView save(@Valid Product product, BindingResult result,
+			RedirectAttributes ra, MultipartFile summary) {
+
+		// Verificando se tem erros de validacao
 		if (result.hasErrors()) {
 			return form(product);
 		}
@@ -70,19 +72,19 @@ public class ProductsController {
 		ra.addFlashAttribute("sucesso", "Produto Cadastrado com Sucesso");
 		return new ModelAndView("redirect:/products");
 	}
-	
-	@RequestMapping(method=RequestMethod.GET)
+
+	@RequestMapping(method = RequestMethod.GET)
 	@Transactional
 	@Cacheable("lastProducts")
-	public ModelAndView list(){		
+	public ModelAndView list() {
 		ModelAndView modelAndView = new ModelAndView("products/list");
 		modelAndView.addObject("products", productDAO.list());
 		return modelAndView;
 	}
-	
-	@RequestMapping(method=RequestMethod.GET, value="/{id}")
+
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	@Transactional
-	public ModelAndView show(@PathVariable("id") Integer id){		
+	public ModelAndView show(@PathVariable("id") Integer id) {
 		ModelAndView modelAndView = new ModelAndView("products/show");
 		modelAndView.addObject("product", productDAO.find(id));
 		return modelAndView;
