@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -66,8 +66,9 @@ public class ShoppingCartController {
 				String response = restTemplate.postForObject(uriToPay, new PaymentData(total), String.class);
 				System.out.println(response);
 				return "redirect:/products";				
-			} catch (HttpClientErrorException exception){
+			} catch (HttpServerErrorException exception){
 				System.out.println("Ocorreu um erro ao criar o Pagamento: " + exception.getMessage());
+				exception.printStackTrace();
 				return "redirect:/shopping";
 			}
 		};
