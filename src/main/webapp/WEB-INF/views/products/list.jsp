@@ -25,6 +25,9 @@ table, th, td {
 	<sec:authorize access="isAuthenticated()">
 		<sec:authentication property="principal" var="user" />
 		<div>Olá ${user.name}</div>
+		<c:url value="/logout" var="logoutUrl"/>
+		<a href="${logoutUrl}">Logout</a>
+		<div></div>
 	</sec:authorize>
 
 	<h1>Casa do Código</h1>
