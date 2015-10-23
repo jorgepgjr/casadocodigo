@@ -1,37 +1,61 @@
 package br.com.casadocodigo.loja.conf;
 
 import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration.Dynamic;
 
+import org.hibernate.cfg.Environment;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+public class ServletSpringMVC extends
+		AbstractAnnotationConfigDispatcherServletInitializer {
 
-public class ServletSpringMVC extends AbstractAnnotationConfigDispatcherServletInitializer{
-
-	//Carrega antes de getServletConfigClasses()
+	@Autowired
+	Environment env;
+	
+	// Carrega antes de getServletConfigClasses()
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[]{JPAConfiguration.class,SecurityConfiguration.class, AppWebConfiguration.class};
+		return new Class[] { JPAConfiguration.class,
+				SecurityConfiguration.class, AppWebConfiguration.class };
 	}
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class[]{};
+		return new Class[] {};
 	}
 
 	@Override
 	protected String[] getServletMappings() {
-		return new String[]{"/"};
+		return new String[] { "/" };
 	}
 
-	/* (non-Javadoc)
-	 * Configuracao para upload de arquivo;
-	 * @see org.springframework.web.servlet.support.AbstractDispatcherServletInitializer#customizeRegistration(javax.servlet.ServletRegistration.Dynamic)
+	/*
+	 * (non-Javadoc) Configuracao para upload de arquivo;
+	 * 
+	 * @see
+	 * org.springframework.web.servlet.support.AbstractDispatcherServletInitializer
+	 * #customizeRegistration(javax.servlet.ServletRegistration.Dynamic)
 	 */
 	@Override
 	protected void customizeRegistration(Dynamic registration) {
 		registration.setMultipartConfig(new MultipartConfigElement(""));
 	}
+
+	@Override
+	public void onStartup(ServletContext servletContext)
+			throws ServletException {
+		super.onStartup(servletContext);
+		servletContext.addListener(RequestContextListener.class);
+		servletContext.setInitParameter("spring.profiles.active", "dev");
+		//Uma solução melhor, seria usar uma  variavel de ambiente para escolehr o profile ativo dinamicamente;
+//		env.getProperties().get("spring.profiles.active");
+	}
 	
 	
+	
+
 }
