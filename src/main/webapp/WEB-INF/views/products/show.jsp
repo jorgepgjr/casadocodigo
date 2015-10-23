@@ -48,25 +48,25 @@
 				<a href="http://www.casadocodigo.com.br">Home</a>
 			</li>
 			<li class="category">
-				<a href="/collections/livros-de-agile">Agile</a>
+				<a href="/collections/livros-de-agile"><spring:message code="navigation.category.agile"/></a>
 			</li>
 			<li class="category">
-				<a href="/collections/livros-de-front-end">Front End</a>
+				<a href="/collections/livros-de-front-end"><spring:message code="navigation.category.front"/></a>
 			</li>
 			<li class="category">
-				<a href="/collections/livros-de-games">Games</a>
+				<a href="/collections/livros-de-games"><spring:message code="navigation.category.games"/></a>
 			</li>
 			<li class="category">
-				<a href="/collections/livros-de-java">Java</a>
+				<a href="/collections/livros-de-java"><spring:message code="navigation.category.java"/></a>
 			</li>
 			<li class="category">
-				<a href="/collections/livros-de-mobile">Mobile</a>
+				<a href="/collections/livros-de-mobile"><spring:message code="navigation.category.mobile"/></a>
 			</li>
 			<li class="category">
-				<a href="/collections/livros-desenvolvimento-web">Web</a>
+				<a href="/collections/livros-desenvolvimento-web"><spring:message code="navigation.category.web"/></a>
 			</li>
 			<li class="category">
-				<a href="/collections/outros">Outros</a>
+				<a href="/collections/outros"><spring:message code="navigation.category.others"/></a>
 			</li>
 		</ul>
 	</nav>

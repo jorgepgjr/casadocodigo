@@ -4,6 +4,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="cdc" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,10 +16,8 @@ table, th, td {
 }
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Casa do codigo</title>
 </head>
-<body>
-
+	<cdc:page title="Listagem de Produtos">
 	<sec:authorize access="hasRole('ROLE_ADMIN')">
 		<c:url value="/products/form" var="formLink"></c:url>
 		<a href="${formLink}"> Cadastrar novo produto </a>
@@ -24,7 +25,8 @@ table, th, td {
 
 	<sec:authorize access="isAuthenticated()">
 		<sec:authentication property="principal" var="user" />
-		<div>Olá ${user.name}</div>
+<%-- 		<div>Olá ${user.name}</div> --%>
+		<spring:message code="users.welcome" arguments="${user.name}"/>
 		<c:url value="/logout" var="logoutUrl"/>
 		<a href="${logoutUrl}">Logout</a>
 		<div></div>
@@ -64,5 +66,5 @@ table, th, td {
 			</c:forEach>
 		</table>
 	</div>
-</body>
+</cdc:page>
 </html>

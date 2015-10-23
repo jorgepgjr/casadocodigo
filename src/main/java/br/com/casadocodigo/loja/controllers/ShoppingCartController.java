@@ -6,6 +6,9 @@ import java.util.concurrent.Callable;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -63,7 +66,11 @@ public class ShoppingCartController {
 			String uriToPay =
 					"http://book-payment.herokuapp.com/payment";
 			try{
-				String response = restTemplate.postForObject(uriToPay, new PaymentData(total), String.class);
+				final HttpHeaders headers = new HttpHeaders();
+				headers.setContentType(MediaType.APPLICATION_JSON);
+				HttpEntity<PaymentData> request = new HttpEntity<>(new PaymentData(total), headers);
+				
+				String response = restTemplate.postForObject(uriToPay,request , String.class);
 				System.out.println(response);
 				return "redirect:/products";				
 			} catch (HttpServerErrorException exception){

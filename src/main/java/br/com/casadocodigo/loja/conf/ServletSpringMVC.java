@@ -24,6 +24,10 @@ public class ServletSpringMVC extends AbstractAnnotationConfigDispatcherServletI
 		return new String[]{"/"};
 	}
 
+	/* (non-Javadoc)
+	 * Configuracao para upload de arquivo;
+	 * @see org.springframework.web.servlet.support.AbstractDispatcherServletInitializer#customizeRegistration(javax.servlet.ServletRegistration.Dynamic)
+	 */
 	@Override
 	protected void customizeRegistration(Dynamic registration) {
 		registration.setMultipartConfig(new MultipartConfigElement(""));
